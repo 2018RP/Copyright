@@ -1,7 +1,7 @@
 pragma solidity ^0.4.17;
 
 contract Copyright {
-    mapping (string => {string, uint}) private Item;
+    mapping (string => string) private Item;
     address public owner;
     address[] public paidUsers;
     uint public price = 100000000000000;
