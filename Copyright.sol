@@ -1,7 +1,3 @@
-library Product { 
-    struct Item {string _owner; string _productID; string _tag;}
-}
-
 pragma solidity ^0.4.17;
 
 contract Copyright {
