@@ -27,8 +27,8 @@ contract Copyright {
     }
     
 // retriving Item
-    function getItemdata (string arg) public constant returns (string) {
-        return Item[arg];
+    function getItemdata (string key) public constant returns (string) {
+        return Item[key];
     }
     
 //set price
