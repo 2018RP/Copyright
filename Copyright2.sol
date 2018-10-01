@@ -4,8 +4,7 @@ contract Copyright {
     mapping (string => string) private Item;
     address public owner;
     address[] public paidUsers;
-    uint public price = 100000000000000;
-    string errorMsg = "error";
+    uint256 public price = 20000000000000000;
     string private accessKey;
 
 
@@ -38,6 +37,16 @@ contract Copyright {
         require (msg.value == price);
         paidUsers.push(msg.sender);
         return Item[accessKey];
+    }
+	
+// collecting money
+	function transfer () public restrictedOwner {
+	    msg.sender.transfer(address(this).balance);
+	}
+	
+// Cheking balance	
+     function getBalance() public view returns (uint256)  {
+        return address(this).balance;
     }
 
 // for testing purposes, to check paidUser is listed up or not.    
