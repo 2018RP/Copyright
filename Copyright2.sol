@@ -2,11 +2,11 @@ pragma solidity ^0.4.17;
 
 contract Copyright {
     mapping (string => string) private Item;
+    mapping (address => bool) public paidUsers;
     address public owner;
-    address[] public paidUsers;
-    uint256 public price = 20000000000000000;
     string private accessKey;
-
+    uint public totalPaidUsers;
+    uint256 private price = 20000000000000000;
 
 // constructor
     constructor () public {
@@ -19,23 +19,23 @@ contract Copyright {
         _;
     }
 
-
 // Add new item
     function setItem (string key, string value) public restrictedOwner() {
         Item[key]= value;
         accessKey = key;
     }
     
-    
-// retriving Item
+// retrieving Item
     function getItemdata (string key) public constant returns (string) {
+        require(paidUsers[msg.sender] == true || msg.sender == owner);
         return Item[key];
     }
     
 // purchase. if a buyer purchase item with exact price, put the user into the paidUsers array.
     function purchase () public payable returns (string) {
         require (msg.value == price);
-        paidUsers.push(msg.sender);
+        paidUsers[msg.sender] = true;
+        totalPaidUsers++;
         return Item[accessKey];
     }
 	
@@ -44,15 +44,8 @@ contract Copyright {
 	    msg.sender.transfer(address(this).balance);
 	}
 	
-// Cheking balance	
+// Checking balance	
      function getBalance() public view returns (uint256)  {
         return address(this).balance;
-    }
-
-// for testing purposes, to check paidUser is listed up or not.    
-    function getUsers(uint256 num) public view returns (address[]){
-        if (num <= paidUsers.length-1) {
-        return paidUsers;
-        } 
     }
 }
