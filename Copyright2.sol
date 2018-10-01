@@ -6,36 +6,38 @@ contract Copyright {
     address[] public paidUsers;
     uint public price = 100000000000000;
     string errorMsg = "error";
-    
-//
+    string private accessKey;
+
+
 // constructor
-//
     constructor () public {
         owner = msg.sender;
     }
 
+// security function only owner can access
     modifier restrictedOwner {
         require(msg.sender == owner);
         _;
     }
 
-//    
+
 // Add new item
     function setItem (string key, string value) public restrictedOwner() {
         Item[key]= value;
+        accessKey = key;
     }
     
     
 // retriving Item
-    function getItemdata (string arg) public constant returns (string) {
-        return Item[arg];
+    function getItemdata (string key) public constant returns (string) {
+        return Item[key];
     }
     
 // purchase. if a buyer purchase item with exact price, put the user into the paidUsers array.
     function purchase () public payable returns (string) {
         require (msg.value == price);
         paidUsers.push(msg.sender);
-        //would like to send item information here...since the user purchased here.
+        return Item[accessKey];
     }
 
 // for testing purposes, to check paidUser is listed up or not.    
