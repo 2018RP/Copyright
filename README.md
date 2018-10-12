@@ -1,7 +1,7 @@
 # A prototype UI for Copyright by using Ethereum blockchain test network + IPFS + React
 
-# This is not included packages.
-# If you want to try this, 
+# Packages are not included.
+## If you want to try this, 
 1. Install packages under the project folder
 - npm install -g create-react-app
 - npm install react-bootstrap
