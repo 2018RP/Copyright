@@ -1,12 +1,15 @@
+
+//0xe0E264FDBEc877d7Dc4f3d8374aaA3eF0b8218Ff    contract address on rinkeby
+//deployed using remix 
 pragma solidity ^0.4.17;
 
 contract Copyright {
-    mapping (string => string) private Item;
     mapping (address => bool) public paidUsers;
     address public owner;
-    string private accessKey;
     uint public totalPaidUsers;
-    uint256 private price = 20000000000000000;
+    uint256 private price = 10000;
+    string ipfsHash;
+ 
 
 // constructor
     constructor () public {
@@ -20,15 +23,13 @@ contract Copyright {
     }
 
 // Add new item
-    function setItem (string key, string value) public restrictedOwner() {
-        Item[key]= value;
-        accessKey = key;
-    }
-    
-// retrieving Item
-    function getItemdata (string key) public constant returns (string) {
-        require(paidUsers[msg.sender] == true || msg.sender == owner);
-        return Item[key];
+    function sendHash(string x) public restrictedOwner() {
+    ipfsHash = x;
+     }
+     
+    function getHash() public view returns (string x)  {
+     require (msg.sender == owner);
+     return ipfsHash;
     }
     
 // purchase. if a buyer purchase item with exact price, put the user into the paidUsers array.
@@ -36,8 +37,8 @@ contract Copyright {
         require (msg.value == price);
         paidUsers[msg.sender] = true;
         totalPaidUsers++;
-        return Item[accessKey];
-    }
+        return ipfsHash;
+    } 
 	
 // collecting money
 	function transfer () public restrictedOwner {
