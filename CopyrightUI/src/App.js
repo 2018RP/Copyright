@@ -57,6 +57,9 @@ class App extends Component {
     catch(error){
         console.log(error);
       } //catch
+	//display the item
+ 	const url= `https://gateway.ipfs.io/ipfs/${this.state.ipfsHash}`;
+      	this.setState({url});
   } //onClick
 
     onSubmit = async (event) => {
@@ -91,10 +94,6 @@ class App extends Component {
           this.setState({transactionHash});
         }); //copyright 
       }) //await ipfs.add 
-
-      const url= `https://gateway.ipfs.io/ipfs/${this.state.ipfsHash}`;
-      this.setState({url});
-
     }; //onSubmit 
 
 //Button function for checking balace of the smart contract
@@ -183,7 +182,7 @@ class App extends Component {
                     <td>{this.state.gasUsed}</td>
                   </tr>
                   <tr>
-                    <td>Owner address</td>
+                    <td>User address</td>
                     <td>{this.state.owner}</td>
                   </tr>
 				          <tr>
